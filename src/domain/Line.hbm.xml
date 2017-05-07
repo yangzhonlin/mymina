@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-lazy="false">
+	<class name="domain.Line" table="line">
+		<id name="id" column="id">
+			<generator class="native"></generator>
+		</id>
+		<set name="points" inverse="true">
+			<key column="pid"></key>
+			<one-to-many class="domain.Point"></one-to-many>
+		</set>
+		<property name="user" column="uid"></property>
+	</class>
+</hibernate-mapping>
