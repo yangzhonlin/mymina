@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="mina-integration-beans-2.0.16">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/lib/mina-integration-beans-2.0.16.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/lib/mina-integration-xbean-2.0.16.jar!/" />
+      <root url="jar://$PROJECT_DIR$/web/WEB-INF/lib/mina-statemachine-2.0.16.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
