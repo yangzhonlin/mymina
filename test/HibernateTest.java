@@ -27,12 +27,12 @@ public class HibernateTest {
         ServiceRegistry registry  = new ServiceRegistryBuilder().applySettings(configure.getProperties()).buildServiceRegistry();
         SessionFactory sessionFactory = configure.buildSessionFactory(registry);
         session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
+        transaction = session.beginTransaction();
     }
 
     @Test
     public void test01(){
-        transaction.begin();
+        //transaction.begin();
         Line line = new Line();
         User user = new User();
         user.setUserName("张三");

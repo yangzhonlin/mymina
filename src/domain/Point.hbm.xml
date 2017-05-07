@@ -9,7 +9,7 @@
 		</id>
 		<property name="x"></property>
 		<property name="y"></property>
-		<property name="line" type="domain.Line"></property>
 		<property name="timestamp" type="timestamp"></property>
+		<many-to-one name="line" column="lid"></many-to-one>
 	</class>
 </hibernate-mapping>

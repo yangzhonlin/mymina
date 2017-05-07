@@ -8,9 +8,9 @@
 			<generator class="native"></generator>
 		</id>
 		<set name="points" inverse="true">
-			<key column="pid"></key>
+			<key column="id"></key>
 			<one-to-many class="domain.Point"></one-to-many>
 		</set>
-		<property name="user" column="uid"></property>
+		<many-to-one name="user"></many-to-one>
 	</class>
 </hibernate-mapping>
