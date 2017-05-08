@@ -37,6 +37,60 @@
 		</property>
 	</bean>
 
+	<!--配置數據源-->
+	<bean name="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="user" value="root"></property>
+		<property name="password" value="root"></property>
+		<property name="driverClass" value="com.mysql.jdbc.Driver"></property>
+		<property name="initialPoolSize" value="3"></property>
+		<property name="acquireIncrement" value="3"></property>
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/points"></property>
+		<property name="maxIdleTime" value="120"></property>
+	</bean>
+	<!--SessionFactory-->
+	<bean name="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+				<prop key="show_sql">true</prop>
+				<prop key="hbm2ddl.auto">update</prop>
+			</props>
+		</property>
+		<property name="mappingLocations">
+			<list>
+				<value type="domain.Points"></value>
+				<value type="domain.User"></value>
+			</list>
+		</property>
+	</bean>
+	<!--事務管理器-->
+	<bean name="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager" >
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<!-- 事务通知 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="find*" read-only="true"/>
+			<tx:method name="get*" read-only="true"/>
+			<tx:method name="list*" read-only="true"/>
+			<tx:method name="*" rollback-for="Throwable"/>
+		</tx:attributes>
+	</tx:advice>
+	<!-- aop配置被事务控制的类 -->
+	<aop:config>
+		<aop:pointcut id="serviceOperation" expression="bean(*Service)"/><!-- 扫描以Service结尾的bean -->
+		<!--     	<aop:pointcut id="serviceOperation" expression="execution(* cn.itcast..service.impl.*.*(..))"/> -->
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="serviceOperation"/>
+	</aop:config>
+	<context:component-scan base-package="service"></context:component-scan>
+
+	<bean name="pointsDao" class="dao.PointsDao">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean name="userDao" class="dao.UserDao">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
 	<!-- 加载配置文件 -->
 	<import resource="spring-mina.xml" />
 
