@@ -1,5 +1,5 @@
-import domain.Line;
-import domain.Point;
+
+import domain.Points;
 import domain.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -11,50 +11,56 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Date;
+import java.util.*;
 
 
 /**
  * Created by Lin on 2017/5/7.
  */
 public class HibernateTest {
-    private  SessionFactory sessionFactory;
-    private  Session session;
+    private SessionFactory sessionFactory;
+    private Session session;
     private Transaction transaction;
+
     @Before
-    public void initial(){
+    public void initial() {
         Configuration configure = new Configuration().configure();
-        ServiceRegistry registry  = new ServiceRegistryBuilder().applySettings(configure.getProperties()).buildServiceRegistry();
+        ServiceRegistry registry = new ServiceRegistryBuilder().applySettings(configure.getProperties()).buildServiceRegistry();
         SessionFactory sessionFactory = configure.buildSessionFactory(registry);
         session = sessionFactory.openSession();
         transaction = session.beginTransaction();
     }
 
     @Test
-    public void test01(){
-        //transaction.begin();
-        Line line = new Line();
-        User user = new User();
-        user.setUserName("张三");
+    public void test01() {
+        User user  = new User();
+        user.setUserName("張三");
         user.setPassword("xxxx");
+        session.save(user);
+        String s = UUID.randomUUID().toString().replace("-","");
+        Points points1 = new Points(120.123, 22.32, s, new Date());
+        points1.setUser(user);
 
-        line.setUser(user);
-        session.saveOrUpdate(user);
-        session.saveOrUpdate(line);
+        Points points2 = new Points(120.223, 22.42, s, new Date());
+        points2.setUser(user);
+        Points points3 = new Points(120.153, 22.48, s, new Date());
+        points3.setUser(user);
+        session.save(points1);
+        session.save(points2);
+        session.save(points3);
+    }
 
-        Point point = new Point();
-
-        point.setX(120);
-        point.setY(23);
-        point.setTimestamp(new Date());
-        point.setLine(line);
-
-        session.saveOrUpdate(point);
+    @Test
+    public void test02() {
 
     }
 
+    @Test
+    public void test03(){
+
+    }
     @After
-    public void destroy(){
+    public void destroy() {
         transaction.commit();
         session.close();
     }

@@ -9,10 +9,9 @@
 		<property name="connection.password">root</property>
 		<property name="hbm2ddl.auto">create</property>
 		<property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
-		<property name="format_sql">true</property>
+		<!--<property name="format_sql">true</property>-->
 		<property name="show_sql">true</property>
-		<mapping resource="domain/Line.hbm.xml"></mapping>
-		<mapping resource="domain/Point.hbm.xml"></mapping>
+		<mapping class="domain.Points"></mapping>
 		<mapping resource="domain/User.hbm.xml"></mapping>
 	</session-factory>
 </hibernate-configuration>

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-lazy="false">
+	<class name="Student" table="students">
+		<id name="id" column="id" type="long">
+			<generator class="increment"></generator>
+		</id>
+		<property name="name" column="name" type="string"></property>
+		<property name="age" column="age" type="int"></property>
+		<property name="cardID" column="cardID" type="long"></property>
+		<many-to-one name="team" class="Team" column="team_id" cascade="none"></many-to-one>
+	</class>
+</hibernate-mapping>
